@@ -3,26 +3,19 @@ import '../styles/login.css';
 import { keys } from '../api/apikeys';
 import { findRenderedComponentWithType } from 'react-dom/test-utils';
 
-export default function Login(props) {
-    const [error, setError] = useState(null);
-    const [loaded, setLoaded] = useState(false);
-
-    setLoaded = () => {
-        loaded = true;
-    }
+export default function LoginScreen(props) {
+    // Login Screen Component
 
     const client_id = keys.client_id;
     const secret = keys.secret;
+
+    const authenticateSpotify = () => {
+
+    }
     
     const userLogin = () => {
         console.log('Authenticating login...');
-        fetch('https://accounts.spotify.com/authorize')
-            .then(
-                (result) => {
-                    
-                }
-            )
-    }
+    };
 
     return (
         <div className='login'>

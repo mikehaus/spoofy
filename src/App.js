@@ -10,12 +10,21 @@ import {
 import MainContainer from './components/maincontainer';
 import logo from './logo.svg';
 import './App.css';
+import LoginScreen from './components/login';
 
 function App() {
   return (
     <Router>
       <div>
-        <MainContainer />  
+        <Switch>
+          <LoginScreen />
+          <Route path='/login'>
+            
+          </Route>
+          <Route path='/main'>
+            <MainContainer />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

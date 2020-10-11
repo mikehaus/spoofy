@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import {
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom';
 import Header from './nav/header';
 import SideBar from './nav/sidebar';
 import Player from './nav/player';
 import NavWindowView from './nav/navwindow';
-import Login from './login';
 import keys from '../api/apikeys';
 import '../styles/main.css';
 
@@ -16,7 +20,7 @@ class MainContainer extends React.Component {
             isLoaded: false,
             library: [],
             playlists: [],
-            loggedIn: true,
+            loggedIn: false,
         };
     }
 
@@ -24,21 +28,19 @@ class MainContainer extends React.Component {
 
     }
 
-    render () {
-        if (this.state.loggedIn === false) {
-            return (
-                <Login />
-            );
-        }
+    updateLoggedIn = () => {
+        this.setState({ loggedIn: !this.state.loggedIn });
+    }
 
+    render () {
         return (
-            <div className='container'>
-                <Header />
-                <SideBar />
-                <NavWindowView />
-                <Player />
-            </div>
-        );
+                <div className='container'>
+                    <Header />
+                    <SideBar />
+                    <NavWindowView />
+                    <Player />
+                </div>
+            );
     }
 }
 

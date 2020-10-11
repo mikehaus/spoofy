@@ -1,0 +1,48 @@
+.login {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #121212;
+}
+
+.center-box {
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100px;
+    min-height: 100px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 auto;
+    padding-bottom: 30px;
+    font-weight: 700;
+    font-size: 75;
+    color: white;
+}
+
+button {
+    border: 0px none;
+    position: relative;
+    width: 250px;
+    height: 40px;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 45;
+    font-weight: 500;
+    background-color: #1db954;
+}
+
+button:active,
+button:focus {
+    outline: none;
+    -moz-outline-style: none;
+}

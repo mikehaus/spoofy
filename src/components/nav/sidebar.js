@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../../styles/main.css';
 import '../../styles/nav/sidebar.css';
 
-function SideBar() {
+function SideBar(props) {
     /* Main Sidebar component. 
      * Contains Main Nav Button Container nav,
      * LibraryList
@@ -13,7 +13,7 @@ function SideBar() {
         <div className='sidebar'>
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
-                    hello
+                    Test
                 </div>
                 <div className='main-sidebar-nav'>
 

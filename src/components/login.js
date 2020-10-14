@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/login.css';
 import { keys } from '../api/apikeys';
-import { findRenderedComponentWithType } from 'react-dom/test-utils';
 
 export default function LoginScreen(props) {
     // Login Screen Component

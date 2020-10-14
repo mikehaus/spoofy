@@ -19,7 +19,6 @@ function App() {
         <Switch>
           <LoginScreen />
           <Route path='/login'>
-            
           </Route>
           <Route path='/main'>
             <MainContainer />

@@ -28,7 +28,7 @@ h1 {
     color: white;
 }
 
-button {
+.login-button {
     border: 0px none;
     position: relative;
     width: 250px;

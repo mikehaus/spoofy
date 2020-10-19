@@ -13,12 +13,23 @@ import './App.css';
 import LoginScreen from './components/login';
 
 function App() {
+
+  function authenticateUser(link) {
+    console.log('got to authenticate');
+    window.open(link, '_self');
+  }
+
+  const getInfo = () => {
+    //fetch('https://')
+  }
+
   return (
     <Router>
       <div>
         <Switch>
-          <LoginScreen />
           <Route path='/login'>
+            <LoginScreen 
+              authUser={authenticateUser}/>
           </Route>
           <Route path='/main'>
             <MainContainer />

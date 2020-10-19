@@ -24,10 +24,6 @@ class MainContainer extends React.Component {
         };
     }
 
-    componnentDidMount = () => {
-
-    }
-
     updateLoggedIn = () => {
         this.setState({ loggedIn: !this.state.loggedIn });
     }

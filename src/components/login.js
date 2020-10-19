@@ -1,32 +1,44 @@
 import React, { useState } from 'react';
 import '../styles/login.css';
-import { keys } from '../api/apikeys';
+import { Spotify } from '../api/apikeys';
 
-export default function LoginScreen(props) {
+export default class LoginScreen extends React.Component {
     // Login Screen Component
+    constructor(props) {
+        super(props);
+        this.userLogin = this.userLogin.bind(this);
+        this.authenticateSpotify = this.authenticateSpotify.bind(this);
+    }
 
-    const client_id = keys.client_id;
-    const secret = keys.secret;
-
-    const authenticateSpotify = () => {
-
+    authenticateSpotify = () => {
+        const clientId = Spotify.client_id;
+        const redirectUri = Spotify.redirect_uri
+        const scopes = Spotify.scopes;
+        const endpoint = Spotify.auth_endpoint;
+        let auth_link = `${endpoint}?response_type=code&client_id=${clientId}&scope=${scopes.join('%20')}&redirect_uri=${redirectUri}`;
+        console.log('got to authenticate');
+        this.props.authUser(auth_link);
     }
     
-    const userLogin = () => {
+    userLogin = () => {
         console.log('Authenticating login...');
-    };
+        this.authenticateSpotify();
+    }
 
-    return (
-        <div className='login'>
-            <div className='center-box'>
-                <h1>
-                    SPOOFY
-                </h1>
-                <button
-                    onClick={userLogin}>
-                    Login
-                </button>
+    render() {
+        return (
+            <div className='login'>
+                <div className='center-box'>
+                    <h1>
+                        SPOOFY
+                    </h1>
+                    <button
+                        className='login-button'
+                        onClick={this.userLogin}>
+                        Login
+                    </button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }

@@ -5,14 +5,15 @@ import '../../styles/nav/sidebar.css';
 function SidebarList(props) {
     
     const links = props.linkList;
-    const route = 'http://localhost:3000/';
-    const listItems = links.map((link) =>
+    const route = 'http://localhost:3000/home/';
+    const listItems = links.map((item, index) =>
         <a 
           className='links-in-list'
-          href={route + link}
-          key={link}
+          href={route + item.link}
+          key={index}
+          onClick={props.getInfo}
             >
-            {link}
+            {item.data}
         </a>
     );
 
@@ -30,13 +31,35 @@ function SideBar(props) {
      * PlaylistsList
      * NewPlaylist Container */
 
-    const liblist = [
-        'hello',
-        'this',
-        'is',
-        'an',
-        'example',
-        'list'
+    const getInfo = () => {
+        console.log('get info from sidebar');
+    }
+
+    const playlist_list = [
+        {
+            link: 'playlist_foryou',
+            data: 'Made For You' 
+        },
+        {
+            link: 'playlist_recent',
+            data: 'Recently Played' 
+        },
+        {
+            link: 'playlist_liked',
+            data: 'Liked Songs' 
+        },
+        {
+            link: 'playlist_albums',
+            data: 'Albums' 
+        },
+        {
+            link: 'playlist_artists',
+            data: 'Artists' 
+        },
+        {
+            link: 'playlist_podcast',
+            data: 'Podcasts' 
+        }
     ];
 
     return (
@@ -51,7 +74,8 @@ function SideBar(props) {
                     <h6>YOUR LIBRARY</h6>
                     <div className='link-list'>
                         <SidebarList
-                            linkList={liblist} />
+                            getInfo={getInfo}
+                            linkList={playlist_list} />
                     </div>
                     <h6>PLAYLISTS</h6>
                 </div>

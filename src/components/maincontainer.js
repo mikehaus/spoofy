@@ -13,15 +13,20 @@ import '../styles/main.css';
 
 class MainContainer extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            viewInfo: '',
             error: null,
             isLoaded: false,
             library: [],
             playlists: [],
             loggedIn: false,
         };
+    }
+
+    updateView = (info) => {
+        this.setState({viewInfo: info});
     }
 
     updateLoggedIn = () => {

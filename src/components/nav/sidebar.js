@@ -9,10 +9,9 @@ function SidebarList(props) {
     const listItems = links.map((item, index) =>
         <a 
           className='links-in-list'
-          href={route + item.link}
           key={index}
-          onClick={props.getInfo}
-            >
+          onClick={() => 
+            props.getInfo(item.data)} >
             {item.data}
         </a>
     );
@@ -31,7 +30,8 @@ function SideBar(props) {
      * PlaylistsList
      * NewPlaylist Container */
 
-    const getInfo = () => {
+    const getInfo = (e) => {
+        console.log(e);
         console.log('get info from sidebar');
     }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/login.css';
-import { Spotify } from '../api/apikeys';
+import { Spotify, loginUrl } from '../api/spotify';
 
 export default class LoginScreen extends React.Component {
     // Login Screen Component
@@ -11,13 +11,7 @@ export default class LoginScreen extends React.Component {
     }
 
     authenticateSpotify = () => {
-        const clientId = Spotify.client_id;
-        const redirectUri = Spotify.redirect_uri
-        const scopes = Spotify.scopes;
-        const endpoint = Spotify.auth_endpoint;
-        let auth_link = `${endpoint}?response_type=code&client_id=${clientId}&scope=${scopes.join('%20')}&redirect_uri=${redirectUri}`;
-        console.log('got to authenticate');
-        this.props.authUser(auth_link);
+        window.open(loginUrl, '_self');
     }
     
     userLogin = () => {

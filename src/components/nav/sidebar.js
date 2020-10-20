@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/main.css';
 import '../../styles/nav/sidebar.css';
 
-function SidebarList(props) {
+function SidebarListMain(props) {
     
     const links = props.linkList;
     const route = 'http://localhost:3000/home/';
@@ -23,12 +23,35 @@ function SidebarList(props) {
     );
 }
 
+function SidebarListPlaylists(props) {
+    
+    const links = props.linkList.items;
+    console.log(links);
+    const route = 'http://localhost:3000/home/';
+    const listItems = links.map((playlist, index) =>
+        <a 
+          className='links-in-list'
+          key={index} >
+            {playlist.name}
+        </a>
+    );
+
+    return (
+        <div>
+            {listItems}
+        </div>
+    );
+}
+
 function SideBar(props) {
     /* Main Sidebar component. 
      * Contains Main Nav Button Container nav,
      * LibraryList
      * PlaylistsList
      * NewPlaylist Container */
+
+    const [userPlaylists, setPlaylists] = useState(null);
+    const [isLoaded, setLoaded] = useState(false)
 
     const getInfo = (e) => {
         console.log(e);
@@ -62,6 +85,16 @@ function SideBar(props) {
         }
     ];
 
+    useEffect(() => {
+        props.spotify
+            .getUserPlaylists()
+            .then((data) => {
+                console.log('Playlists: ', data);
+                setPlaylists(data);
+                setLoaded(true);
+            })
+      }, [])
+
     return (
         <div className='sidebar'>
             <div className='sidebar-container'>
@@ -73,14 +106,23 @@ function SideBar(props) {
                 <div className='main-sidebar-nav'>
                     <h6>YOUR LIBRARY</h6>
                     <div className='link-list'>
-                        <SidebarList
+                        <SidebarListMain
                             getInfo={getInfo}
                             linkList={playlist_list} />
                     </div>
                     <h6>PLAYLISTS</h6>
+                    <div className='link-list'>
+                        { isLoaded ? (
+                            <SidebarListPlaylists
+                                getInfo={getInfo}
+                                linkList={userPlaylists} /> ) : (
+                            null
+                            )
+                        }
+                    </div>
                 </div>
                 <div className='bottom-sidebar'>
-                    
+
                 </div>
             </div>
         </div>

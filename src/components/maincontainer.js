@@ -8,7 +8,7 @@ import Header from './nav/header';
 import SideBar from './nav/sidebar';
 import Player from './nav/player';
 import NavWindowView from './nav/navwindow';
-import keys from '../api/apikeys';
+import keys from '../api/spotify';
 import '../styles/main.css';
 
 class MainContainer extends React.Component {
@@ -16,28 +16,18 @@ class MainContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            viewInfo: '',
-            error: null,
-            isLoaded: false,
-            library: [],
-            playlists: [],
-            loggedIn: false,
+            userEmail: props.userEmail,
+            spotify: props.spotify
         };
-    }
-
-    updateView = (info) => {
-        this.setState({viewInfo: info});
-    }
-
-    updateLoggedIn = () => {
-        this.setState({ loggedIn: !this.state.loggedIn });
     }
 
     render () {
         return (
                 <div className='container'>
                     <Header />
-                    <SideBar />
+                    <SideBar 
+                        spotify={this.state.spotify}
+                        userEmail={this.state.userEmail} />
                     <NavWindowView />
                     <Player />
                 </div>

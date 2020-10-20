@@ -1,64 +1,54 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-  Redirect
-} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import MainContainer from './components/maincontainer';
 import logo from './logo.svg';
 import './App.css';
 import LoginScreen from './components/login';
 import { render } from '@testing-library/react';
+import { getTokenFromUrl } from './api/spotify';
+import SpotifyWebApi from 'spotify-web-api-js';
 
-class App extends React.Component {
+const spotify = new SpotifyWebApi();
 
-  constructor() {
-    super();
-    this.state = {
-      isUserAuthenticated: false,
-      mainContainerView: '/'
-    };
-    this.authenticateUser = this.authenticateUser.bind(this);
-    this.getInfo = this.getInfo.bind(this);
-  }
+function App() {
 
-  authenticateUser(link) {
-    console.log('got to authenticate');
-    window.open(link, '_self');
-  }
+  const [token, setToken] = useState(null)
+  const [userEmail, setUserEmail] = useState(null);
 
-  getInfo = () => {
-    //fetch('https://')
-  }
+  // Runs code based on given condition
+  useEffect(() => {
+    const hash = getTokenFromUrl();
+    window.location.hash = '';
+    const _token = hash.access_token;
 
-  render() {
-    return (
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path='/'>
-              { this.state.isUserAuthenticated ? 
-                <Redirect to='/login' /> :
-                <Redirect to='/home' />
-              }
-            </Route>
-            <Route exact path='/home'>
-              <MainContainer
-                internalView={this.state.mainContainerView} />
-            </Route>
-            <Route exact path='/login'>
-              <LoginScreen 
-                authUser={this.authenticateUser}/>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+    if (_token) {
+      setToken(_token);
+      spotify.setAccessToken(_token);
+
+      spotify.getMe().then(user => {
+        console.log('user: ', user);
+        setUserEmail(userEmail)
+      })
+    }
+
+    console.log('GOT TOKEN: ', token);
+  }, [])
+
+  return (
+    <div>
+      {
+        token ? (
+          <MainContainer 
+            spotify={spotify}
+            userEmail={userEmail}/>
+         ) : (
+          <LoginScreen /> 
+         )
+      }
+    </div>
+  );
+  
 }
 
 export default App;
+
+// STOPPED AT 1:30

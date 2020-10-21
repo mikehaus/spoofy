@@ -7,13 +7,13 @@ function SidebarListMain(props) {
     const links = props.linkList;
     const route = 'http://localhost:3000/home/';
     const listItems = links.map((item, index) =>
-        <a 
-          className='links-in-list'
+        <button
+          className='links-in-list playlist-library-link'
           key={index}
           onClick={() => 
             props.getInfo(item.data)} >
             {item.data}
-        </a>
+        </button>
     );
 
     return (
@@ -29,11 +29,11 @@ function SidebarListPlaylists(props) {
     console.log(links);
     const route = 'http://localhost:3000/home/';
     const listItems = links.map((playlist, index) =>
-        <a 
-          className='links-in-list'
+        <button 
+          className='links-in-list playlist-library-button'
           key={index} >
             {playlist.name}
-        </a>
+        </button>
     );
 
     return (
@@ -99,7 +99,8 @@ function SideBar(props) {
         <div className='sidebar'>
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
-                    <button className='main-nav-btn'>Home</button>
+                    <button className='main-nav-btn'
+                        onClick={props.changeViewHome}>Home</button>
                     <button className='main-nav-btn'>Browse</button>
                     <button className='main-nav-btn'>Radio</button>
                 </div>
@@ -122,7 +123,9 @@ function SideBar(props) {
                     </div>
                 </div>
                 <div className='bottom-sidebar'>
-
+                    <button className='playlist-create-btn'>
+                        New Playlist
+                    </button>
                 </div>
             </div>
         </div>

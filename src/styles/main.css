@@ -4,8 +4,9 @@
     height: 100vh;
     display: grid;
     grid-template-columns: 200px auto;
-    grid-template-rows: 42px auto 75px;
+    grid-template-rows: 42px auto 80px;
     font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -37,5 +38,5 @@
     grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 3;
-    background-color: #535353;
+    background-color: #252525;
 }

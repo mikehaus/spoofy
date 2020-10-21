@@ -24,12 +24,15 @@ class MainContainer extends React.Component {
     render () {
         return (
                 <div className='container'>
-                    <Header />
+                    <Header 
+                        spotify={this.state.spotify}/>
                     <SideBar 
                         spotify={this.state.spotify}
                         userEmail={this.state.userEmail} />
-                    <NavWindowView />
-                    <Player />
+                    <NavWindowView
+                        spotify={this.state.spotify} />
+                    <Player 
+                        spotify={this.state.spotify} />
                 </div>
             );
     }

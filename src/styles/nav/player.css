@@ -1,0 +1,66 @@
+
+.player-wrapper {
+    display: grid;
+    grid-template-columns: 250px calc(100vw - 450px) 200px;
+    border-top: .1px solid #2f2f2f;
+}
+
+.player-album-info-container {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    height: 100%;
+}
+
+.player-album-info-picture {
+    position: relative;
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+}
+
+.player-album-info-text {
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+
+.player-song-name {
+    position: relative;
+    top: -30px;
+    color: #b3b3b3;
+    width: 100%;
+    font-size: 11pt;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    text-align: start;
+    color: #b3b3b3;
+    left: 70px;
+}
+
+.player-song-name:hover,
+.player-artist-name:hover {
+    text-decoration: underline solid white;
+    color: white
+}
+
+.player-artist-name {
+    position: relative;
+    top: -30px;
+    left: 70px;
+    color: #b3b3b3;
+    width: 100%;
+    font-size: 9pt;
+    font-weight: 500;
+    background-color: transparent;
+    border: none;
+    text-align: start;
+    color: #b3b3b3;  
+}
+
+.player-main-container {
+    grid-row-start: 2;
+    grid-row-end: 2;
+}

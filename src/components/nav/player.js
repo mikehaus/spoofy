@@ -6,6 +6,10 @@ function Player(props) {
 
     const [currentlyPlaying, updateCurrentlyPlaying] = useState(null);
     const [isLoaded, setLoaded] = useState(false);
+    const [minutesLeft, setMinutes] = useState(0);
+    const [secondsLeft, setSeconds] = useState(0);
+    const [songMinutesTotal, setMinutesTotal] = useState(0);
+    const [songSecondsTotal, setSecondsTotal] = useState(0);
 
     useEffect(() => {
         props.spotify
@@ -13,6 +17,10 @@ function Player(props) {
             .then((data) => {
                 console.log('TrackInfo: ', data);
                 updateCurrentlyPlaying(data);
+                setMinutes(0);
+                setSeconds(0);
+                setMinutesTotal(0);
+                setSecondsTotal(0);
                 setLoaded(true);
             })
       }, [])
@@ -46,6 +54,18 @@ function Player(props) {
                                     )
                                 }
                         </button>
+                    </div>
+                </div>
+                <div className='player-main-container'>
+                    <div className='player-progress'>
+                        <div className='player-timer player-timer-left'>
+                            { minutesLeft }:{ secondsLeft }{ secondsLeft }
+                        </div>
+                        <div className='player-progress-bar-background'>
+                        </div>
+                        <div className='player-timer player-timer-right'>
+                            { songMinutesTotal }:{ songSecondsTotal }{ songSecondsTotal }
+                        </div>
                     </div>
                 </div>
             </div>

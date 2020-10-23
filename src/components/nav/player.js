@@ -10,6 +10,7 @@ import '../../styles/nav/player.css';
 function Player(props) {
 
     const [currentlyPlaying, updateCurrentlyPlaying] = useState(null);
+    const [lastPlayed, setLastPlayed] = useState(null);
     const [isLoaded, setLoaded] = useState(false);
     const [minutesLeft, setMinutes] = useState(0);
     const [secondsLeft, setSeconds] = useState(0);
@@ -21,16 +22,21 @@ function Player(props) {
     useEffect(() => {
         props.spotify
             .getMyCurrentPlayingTrack()
-            .then((data) => {
-                console.log('TrackInfo: ', data);
-                updateCurrentlyPlaying(data);
+            .then((currentTrackData) => {
+                console.log('CurrentTrackInfo: ', currentTrackData);
+                updateCurrentlyPlaying(currentTrackData);
                 setMinutes(0);
                 setSeconds(0);
                 setMinutesTotal(0);
                 setSecondsTotal(0);
                 setLoaded(true);
                 setSongPlaying(false);
-                setAlbumImage(data.item.album.images[0].url);
+                setAlbumImage(currentTrackData.item.album.images[0].url);
+            });
+        props.spotify
+            .getMyRecentlyPlayedTracks()
+            .then((recentlyPlayedTracks) => {
+                console.log('recentlyPlayedInfo: ', recentlyPlayedTracks);
             })
       }, [])
 
@@ -55,8 +61,8 @@ function Player(props) {
                     <div className='player-album-info-text'>
                         <button
                             className='player-song-name'>
-                                { isLoaded ? (
-                                   currentlyPlaying.item.name
+                                { currentlyPlaying != null ? (
+                                    currentlyPlaying.item.name
                                     ) : (
                                     null
                                     )

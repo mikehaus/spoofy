@@ -9,8 +9,6 @@ import '../../styles/nav/player.css';
 
 function Player(props) {
 
-    const mounted = useRef();
-
     const [recentlyPlayed, setRecentlyPlayed] = useState(null);
     const [currentlyPlaying, updateCurrentlyPlaying] = useState(null);
     const [isCurrentlyPlaying, setIsCurrentlyPlaying] = useState(false);
@@ -21,52 +19,75 @@ function Player(props) {
     const [songSecondsTotal, setSecondsTotal] = useState(0);
     const [isSongPlaying, setSongPlaying] = useState(false);
     const [albumImage, setAlbumImage] = useState(null);
-    const [trackToDisplay, setTrackToDisplay] = useState(null);
+    const [playbackTrack, setPlaybackTrack] = useState(null);
 
     useEffect(() => {
+        // might need to use getmycurrentplaybackstate
+        props.spotify
+            .getMyCurrentPlayingTrack()
+            .then((playbackData) => {
+                console.log('playbackInfo', playbackData);
+                setPlaybackAndCurrentlyPlayingStates(playbackData);
+                setLoaded(true);
+            }
+        );
         props.spotify
             .getMyCurrentPlayingTrack()
             .then((currentTrackData) => {
                 console.log('CurrentTrackInfo: ', currentTrackData);
-                updateCurrentlyPlaying(currentTrackData);
-                setMinutes(0);
-                setSeconds(0);
-                setMinutesTotal(0);
-                setSecondsTotal(0);
-                setLoaded(true);
-                if (currentTrackData != '') {
-                    setSongPlaying(true);
-                    setIsCurrentlyPlaying(true);
-                    setAlbumImage(currentTrackData.item.album.images[0].url);
-                } else {
-                    setCurrentlyPlayingEmpty();
-                }
                 console.log('isCurrentlyPlaying: ', isCurrentlyPlaying);
-            });
+            }
+        );
         props.spotify
             .getMyRecentlyPlayedTracks()
             .then((recentlyPlayedTracks) => {
                 console.log('recentlyPlayedInfo: ', recentlyPlayedTracks);
-                setRecentlyPlayed(recentlyPlayedTracks.items[0]);
-                if (!isCurrentlyPlaying) {
-                    setAlbumImage(recentlyPlayedTracks.items[0].track.album.images[0].url);
-                    setMinutes(0);
-                    setSeconds(0);
-                    setMinutesTotal(0);
-                    setSecondsTotal(0);
-                }
-                console.log(recentlyPlayed);
-            });
+                setRecentlyPlayed(recentlyPlayedTracks);
+            }
+        );
     }, []);
 
-    const setCurrentlyPlayingEmpty = () => {
-        let emptyCurrentlyPlaying = {
-            'item': {
-                'name': '',
-                'artists': ['']
-            }
-        };
-        updateCurrentlyPlaying(emptyCurrentlyPlaying);
+    const setPlaybackAndCurrentlyPlayingStates = (playbackData) => {
+        setPlaybackTrack(playbackData.item);
+        setAlbumImage(playbackData.item.album.images[0].url);
+        setSongPlaying(playbackData.is_playing);
+        console.log(isSongPlaying);
+        let songTimeTotal = millisToMinsAndSecs(playbackData.item.duration_ms);
+        setMinutesTotal(songTimeTotal[0]);
+        setSecondsTotal(songTimeTotal[1]);
+        console.log('progressMS: ', playbackData.progress_ms);
+        let songPlaybackTime = millisToMinsAndSecs(playbackData.progess_ms);
+        setMinutes(songPlaybackTime[0]);
+        setSeconds(songPlaybackTime[1]);
+    }
+
+    const millisToMinsAndSecs = (ms) => {
+        console.log('DurationMS: ', ms);
+        let minutes = Math.floor(ms / 60000);
+        let seconds = ((ms % 60000) / 1000).toFixed(0);
+        console.log('timeCalculated: ', [minutes, seconds]);
+        return [minutes, seconds];
+    }
+
+    const playerToggleSongPlayingState = (e) => {
+        e.preventDefault();
+        setSongPlaying(!isSongPlaying);
+        if (isSongPlaying) {
+            props.spotify.pause();
+        }
+        else {
+            props.spotify.play();
+        }
+    }
+
+    const playerSkipNext = (e) => {
+        e.preventDefault();
+        props.spotify.skipToNext();
+    }
+
+    const playerSkipPrev = (e) => {
+        e.preventDefault();
+        props.spotify.skipToPrevious();
     }
 
     return (
@@ -82,23 +103,15 @@ function Player(props) {
                     <div className='player-album-info-text'>
                         <button
                             className='player-song-name'>
-                                { isCurrentlyPlaying ? (
-                                    currentlyPlaying.item.name
-                                    ) : (
-                                    null
-                                    //recentlyPlayed.track.name
-                                    )
-                                }
+                            { isLoaded ?
+                                playbackTrack.name :
+                                null }
                         </button>
                         <button 
                             className='player-artist-name'>
-                                { isCurrentlyPlaying ? (
-                                    currentlyPlaying.item.artists[0].name
-                                    ) : (
-                                    null
-                                    //recentlyPlayed.track.artists[0].name
-                                    )
-                                }
+                            { isLoaded ?
+                                playbackTrack.artists[0].name :
+                                null }
                         </button>
                     </div>
                 </div>
@@ -111,18 +124,20 @@ function Player(props) {
                             <div className='player-control-btn player-back'>
                                 <IconContext.Provider value={{ size: "20px" }}>
                                     <div>
-                                        <MdSkipPrevious />
+                                        <MdSkipPrevious 
+                                            onClick={playerSkipPrev} />
                                     </div>
                                 </IconContext.Provider>
                             </div>
                             <div className='player-control-btn player-start'>
                                 <IconContext.Provider value={{ size: "40px", className: "global-class-name" }}>
                                     <div>
-                                    {
-                                        isSongPlaying && isLoaded ? (
-                                            <BiPlayCircle />
-                                        ) : (
-                                            <BiPauseCircle />
+                                    { isSongPlaying ? (
+                                        <BiPauseCircle
+                                            onClick={playerToggleSongPlayingState} />
+                                        ) : (                            
+                                        <BiPlayCircle
+                                            onClick={playerToggleSongPlayingState} />
                                         )
                                     }
                                     </div>
@@ -131,7 +146,8 @@ function Player(props) {
                             <div className='player-control-btn player-forward'>
                                 <IconContext.Provider value={{ size: "20px" }}>
                                     <div>
-                                        <MdSkipNext />
+                                        <MdSkipNext
+                                            onClick={playerSkipNext} />
                                     </div>
                                 </IconContext.Provider>
                             </div>
@@ -142,12 +158,12 @@ function Player(props) {
                     </div>
                     <div className='player-progress'>
                             <div className='player-timer player-timer-left'>
-                                { minutesLeft }:{ secondsLeft }{ secondsLeft }
+                                { minutesLeft }:{(secondsLeft < 10 ? '0' : '')}{ secondsLeft }
                             </div>
                             <div className='player-progress-bar-background'>
                             </div>
                             <div className='player-timer player-timer-right'>
-                                { songMinutesTotal }:{ songSecondsTotal }{ songSecondsTotal }
+                                { songMinutesTotal }:{(songSecondsTotal < 10 ? '0' : '')}{ songSecondsTotal }
                             </div>
                     </div>
                 </div>

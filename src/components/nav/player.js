@@ -13,13 +13,15 @@ function Player(props) {
     const [currentlyPlaying, updateCurrentlyPlaying] = useState(null);
     const [isCurrentlyPlaying, setIsCurrentlyPlaying] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
-    const [minutesLeft, setMinutes] = useState(0);
-    const [secondsLeft, setSeconds] = useState(0);
+    const [currentMinuteCount, setCurrentMinuteCount] = useState(0);
+    const [currentSecondCount, SetCurrentSecondCount] = useState(0);
     const [songMinutesTotal, setMinutesTotal] = useState(0);
     const [songSecondsTotal, setSecondsTotal] = useState(0);
     const [isSongPlaying, setSongPlaying] = useState(false);
     const [albumImage, setAlbumImage] = useState(null);
     const [playbackTrack, setPlaybackTrack] = useState(null);
+
+    let interval;
 
     useEffect(() => {
         // might need to use getmycurrentplaybackstate
@@ -47,6 +49,27 @@ function Player(props) {
         );
     }, []);
 
+    const startTimer = () => {
+        interval = setInterval(() => {
+            if (currentSecondCount > 0) {
+                SetCurrentSecondCount(currentSecondCount - 1);
+            }
+
+           if (currentSecondCount === 0) {
+               if (currentMinuteCount === 0) {
+                    clearInterval(interval);
+               } else {
+                   setCurrentMinuteCount((currentMinuteCount) => currentMinuteCount - 1)
+                   SetCurrentSecondCount(59)
+               }
+           }
+        }, 1000);
+    }
+
+    const stopTimer = () => {
+        clearInterval(interval);
+    }
+
     const setPlaybackAndCurrentlyPlayingStates = (playbackData) => {
         setPlaybackTrack(playbackData.item);
         setAlbumImage(playbackData.item.album.images[0].url);
@@ -56,16 +79,22 @@ function Player(props) {
         setMinutesTotal(songTimeTotal[0]);
         setSecondsTotal(songTimeTotal[1]);
         console.log('progressMS: ', playbackData.progress_ms);
-        let songPlaybackTime = millisToMinsAndSecs(playbackData.progess_ms);
-        setMinutes(songPlaybackTime[0]);
-        setSeconds(songPlaybackTime[1]);
+        let currentProgress = playbackData.progress_ms;
+        let songPlaybackTime = millisToMinsAndSecs(currentProgress);
+        setCurrentMinuteCount(songPlaybackTime[0]);
+        SetCurrentSecondCount(songPlaybackTime[1]);
+        if (playbackData.is_playing) {
+            startTimer();
+        } else {
+            stopTimer();
+        }
     }
 
     const millisToMinsAndSecs = (ms) => {
-        console.log('DurationMS: ', ms);
         let minutes = Math.floor(ms / 60000);
         let seconds = ((ms % 60000) / 1000).toFixed(0);
         console.log('timeCalculated: ', [minutes, seconds]);
+        console.log('reloaded')
         return [minutes, seconds];
     }
 
@@ -74,9 +103,11 @@ function Player(props) {
         setSongPlaying(!isSongPlaying);
         if (isSongPlaying) {
             props.spotify.pause();
+            stopTimer();
         }
         else {
             props.spotify.play();
+            startTimer();
         }
     }
 
@@ -158,7 +189,7 @@ function Player(props) {
                     </div>
                     <div className='player-progress'>
                             <div className='player-timer player-timer-left'>
-                                { minutesLeft }:{(secondsLeft < 10 ? '0' : '')}{ secondsLeft }
+                                { currentMinuteCount }:{(currentSecondCount < 10 ? '0' : '')}{ currentSecondCount }
                             </div>
                             <div className='player-progress-bar-background'>
                             </div>

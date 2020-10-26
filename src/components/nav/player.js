@@ -21,7 +21,7 @@ function Player(props) {
     const [albumImage, setAlbumImage] = useState(null);
     const [playbackTrack, setPlaybackTrack] = useState(null);
 
-    let interval;
+    const [interval, setPlayerInterval] = useState(null);
 
     useEffect(() => {
         // might need to use getmycurrentplaybackstate
@@ -49,21 +49,31 @@ function Player(props) {
         );
     }, []);
 
-    const startTimer = () => {
-        interval = setInterval(() => {
-            if (currentSecondCount > 0) {
-                SetCurrentSecondCount(currentSecondCount - 1);
-            }
+    useEffect(() => {
+        if (currentSecondCount === 60) {
+            console.log('got to reset mins and seconds');
+            setCurrentMinuteCount(currentMinuteCount => parseInt(currentMinuteCount) + 1);
+            SetCurrentSecondCount(0);
+        }
 
-           if (currentSecondCount === 0) {
-               if (currentMinuteCount === 0) {
-                    clearInterval(interval);
-               } else {
-                   setCurrentMinuteCount((currentMinuteCount) => currentMinuteCount - 1)
-                   SetCurrentSecondCount(59)
-               }
-           }
-        }, 1000);
+        /*if (currentMinuteCount >= songMinutesTotal && currentSecondCount >= songSecondsTotal){
+            console.log('switching songs');
+            props.spotify
+                .getMyCurrentPlayingTrack()
+                .then((playbackData) => {
+                    console.log('playbackInfo', playbackData);
+                    setPlaybackAndCurrentlyPlayingStates(playbackData);
+                }
+            );
+        }*/
+    }, [currentMinuteCount, currentSecondCount]);
+
+    const startTimer = () => {
+        setPlayerInterval(setInterval(() => {
+            if (currentSecondCount >= 0) {
+                SetCurrentSecondCount(currentSecondCount => parseInt(currentSecondCount) + 1);
+            }
+        }, 1000));
     }
 
     const stopTimer = () => {
@@ -82,7 +92,7 @@ function Player(props) {
         let currentProgress = playbackData.progress_ms;
         let songPlaybackTime = millisToMinsAndSecs(currentProgress);
         setCurrentMinuteCount(songPlaybackTime[0]);
-        SetCurrentSecondCount(songPlaybackTime[1]);
+        SetCurrentSecondCount(songPlaybackTime[1] - 1);
         if (playbackData.is_playing) {
             startTimer();
         } else {

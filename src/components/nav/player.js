@@ -24,12 +24,17 @@ function Player(props) {
     const [interval, setPlayerInterval] = useState(null);
 
     useEffect(() => {
-        // might need to use getmycurrentplaybackstate
+
+        restartTimer();
+
         props.spotify
-            .getMyCurrentPlayingTrack()
+            .getMyCurrentPlaybackState()
             .then((playbackData) => {
                 console.log('playbackInfo', playbackData);
                 setPlaybackAndCurrentlyPlayingStates(playbackData);
+                if (playbackData.is_playing) {
+                    startTimer();
+                }
                 setLoaded(true);
             }
         );
@@ -56,23 +61,28 @@ function Player(props) {
             SetCurrentSecondCount(0);
         }
 
-        /*if (currentMinuteCount >= songMinutesTotal && currentSecondCount >= songSecondsTotal){
+        if (currentMinuteCount >= songMinutesTotal && currentSecondCount >= songSecondsTotal){
             console.log('switching songs');
             props.spotify
                 .getMyCurrentPlayingTrack()
                 .then((playbackData) => {
+                    restartTimer();
                     console.log('playbackInfo', playbackData);
+                    setInterval(null);
                     setPlaybackAndCurrentlyPlayingStates(playbackData);
                 }
             );
-        }*/
+        }
     }, [currentMinuteCount, currentSecondCount]);
+
+    const restartTimer = () => {
+        setCurrentMinuteCount(0);
+        SetCurrentSecondCount(0);
+    }
 
     const startTimer = () => {
         setPlayerInterval(setInterval(() => {
-            if (currentSecondCount >= 0) {
-                SetCurrentSecondCount(currentSecondCount => parseInt(currentSecondCount) + 1);
-            }
+            SetCurrentSecondCount(currentSecondCount => parseInt(currentSecondCount) + 1);
         }, 1000));
     }
 
@@ -87,17 +97,12 @@ function Player(props) {
         console.log(isSongPlaying);
         let songTimeTotal = millisToMinsAndSecs(playbackData.item.duration_ms);
         setMinutesTotal(songTimeTotal[0]);
-        setSecondsTotal(songTimeTotal[1]);
+        setSecondsTotal(songTimeTotal[1] - 1);
         console.log('progressMS: ', playbackData.progress_ms);
         let currentProgress = playbackData.progress_ms;
         let songPlaybackTime = millisToMinsAndSecs(currentProgress);
         setCurrentMinuteCount(songPlaybackTime[0]);
-        SetCurrentSecondCount(songPlaybackTime[1] - 1);
-        if (playbackData.is_playing) {
-            startTimer();
-        } else {
-            stopTimer();
-        }
+        SetCurrentSecondCount(songPlaybackTime[1]);
     }
 
     const millisToMinsAndSecs = (ms) => {

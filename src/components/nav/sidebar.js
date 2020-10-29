@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { AiOutlineHome } from 'react-icons/ai';
+import { CgBrowse, CgAdd } from 'react-icons/cg';
+import { BiRadio } from 'react-icons/bi';
+import { RiAddCircleLine } from 'react-icons/ri';
+import { IconContext } from "react-icons";
 import '../../styles/main.css';
 import '../../styles/nav/sidebar.css';
 
@@ -99,10 +104,39 @@ function SideBar(props) {
         <div className='sidebar'>
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
-                    <button className='main-nav-btn'
-                        onClick={props.changeViewHome}>Home</button>
-                    <button className='main-nav-btn'>Browse</button>
-                    <button className='main-nav-btn'>Radio</button>
+                    <button className='main-nav-btn'>
+                        <div className='main-nav-btn-icon'>
+                            <IconContext.Provider 
+                                value={{ size: "20px" }}>
+                                <div>
+                                    <AiOutlineHome />
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                        <div className='main-nav-btn-text'>Home</div>
+                    </button>    
+                    <button className='main-nav-btn'>
+                        <div className='main-nav-btn-icon'>
+                            <IconContext.Provider 
+                                value={{ size: "20px" }}>
+                                <div>
+                                    <CgBrowse />
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                        <div className='main-nav-btn-text'>Browse</div>
+                    </button>
+                    <button className='main-nav-btn'>
+                        <div className='main-nav-btn-icon'>
+                            <IconContext.Provider 
+                                value={{ size: "20px" }}>
+                                <div>
+                                    <BiRadio />
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                        <div className='main-nav-btn-text'>Radio</div>
+                    </button>
                 </div>
                 <div className='main-sidebar-nav'>
                     <h6>YOUR LIBRARY</h6>
@@ -124,7 +158,15 @@ function SideBar(props) {
                 </div>
                 <div className='bottom-sidebar'>
                     <button className='playlist-create-btn'>
-                        New Playlist
+                        <div className='main-nav-btn-icon'>
+                            <IconContext.Provider 
+                                value={{ size: "30px" }}>
+                                <div>
+                                    <RiAddCircleLine />
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                        <div className='main-nav-btn-text'>New Playlist</div>
                     </button>
                 </div>
             </div>

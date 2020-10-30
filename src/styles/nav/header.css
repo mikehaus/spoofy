@@ -1,24 +1,28 @@
 .header-main-container {
+    position: fixed;
+    top: 8px;
     display: grid;
-    grid-template-columns: 40px 40px 150px auto 100px 30px
+    grid-template-columns: 40px 40px 150px auto 150px 40px;
 }
 
-.view-nav-btn-container {
+.header-view-nav-btn-container {
+    display: grid;
     color: #b3b3b3;
+    text-indent: 10px;
+    max-height: 42px;
 }
 
-.back-button {
+.header-bk-btn {
     grid-column: 1;
     margin: auto;
 }
 
-.forward-button {
-    grid-column: 2;
+.header-fwd-btn {
+    grid-column: 3;
     margin: auto;
 }
 
-.search-bar {
-    position: relative;
+.header-search-bar {
     grid-column: 3;
     background-color: white;
     color: black;
@@ -27,9 +31,7 @@
     border: 0px none;
     font-size: 14px;
     border-radius: 20px;
-    height: 20px;
-    margin: auto;
-    top: 10px;
+    height: 18px;
     text-indent: 20px;
 }
 
@@ -41,4 +43,43 @@ textarea:focus {
 input::-webkit-input-placeholder {/* Chrome/Opera/Safari/Edge */
     /*styles here*/
     color: #313131;
+}
+
+.header-spacer {
+    width: calc(100vw - 620px);
+}
+
+.header-usr-wrapper {
+    grid-column: 5;
+    top: 8px;
+}
+
+.header-usr-container {
+    display: grid;
+    grid-template-columns: 10px auto;
+    width: 100%;
+}
+
+.header-usr-avatar {
+    grid-column: 1;
+}
+
+.header-usr-display-txt {
+    grid-column: 2;
+    text-align: right;
+    margin-top: 2px;
+    padding-right: 10px;
+    font-size: 9pt;
+    color: white;
+}
+
+.header-usr-display-txt:hover {
+    text-decoration: underline;
+}
+
+.header-dropdown {
+    top: 8px;    
+    grid-column: 6;
+    color: #b3b3b3;
+    float: right;
 }

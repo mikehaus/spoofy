@@ -41,15 +41,13 @@ function Player(props) {
                 }
                 setLoaded(true);
             }
-        );
-        
+        );        
         props.spotify
             .getMyDevices()
             .then((deviceData) => {
                 console.log('devicesData: ', deviceData);
             }
         );
-
         props.spotify
             .getMyRecentlyPlayedTracks()
             .then((recentlyPlayedTracks) => {

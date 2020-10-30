@@ -1,0 +1,44 @@
+.header-main-container {
+    display: grid;
+    grid-template-columns: 40px 40px 150px auto 100px 30px
+}
+
+.view-nav-btn-container {
+    color: #b3b3b3;
+}
+
+.back-button {
+    grid-column: 1;
+    margin: auto;
+}
+
+.forward-button {
+    grid-column: 2;
+    margin: auto;
+}
+
+.search-bar {
+    position: relative;
+    grid-column: 3;
+    background-color: white;
+    color: black;
+    min-width: 100%;
+    margin: auto 0;
+    border: 0px none;
+    font-size: 14px;
+    border-radius: 20px;
+    height: 20px;
+    margin: auto;
+    top: 10px;
+    text-indent: 20px;
+}
+
+input:focus, 
+textarea:focus {
+    outline: none;
+}
+
+input::-webkit-input-placeholder {/* Chrome/Opera/Safari/Edge */
+    /*styles here*/
+    color: #313131;
+}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FiHeart } from 'react-icons/fi';
-import { BiShuffle, BiPlayCircle, BiPauseCircle, BiRepeat } from 'react-icons/bi';
+import { BiShuffle, BiPlayCircle, BiPauseCircle, BiRepeat, BiCalculator } from 'react-icons/bi';
 import { MdSkipPrevious, MdSkipNext } from 'react-icons/md';
 import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { IconContext } from "react-icons";
 import '../../styles/main.css';
 import '../../styles/nav/player.css';
+import { RiContactsBookUploadLine } from 'react-icons/ri';
 
 function Player(props) {
 
@@ -14,12 +15,15 @@ function Player(props) {
     const [isCurrentlyPlaying, setIsCurrentlyPlaying] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
     const [currentMinuteCount, setCurrentMinuteCount] = useState(0);
-    const [currentSecondCount, SetCurrentSecondCount] = useState(0);
+    const [currentSecondCount, setCurrentSecondCount] = useState(0);
     const [songMinutesTotal, setMinutesTotal] = useState(0);
     const [songSecondsTotal, setSecondsTotal] = useState(0);
     const [isSongPlaying, setSongPlaying] = useState(false);
     const [albumImage, setAlbumImage] = useState(null);
     const [playbackTrack, setPlaybackTrack] = useState(null);
+    const [songDurationSeconds, setSongDurationSeconds] = useState(null);
+    const [songProgressSeconds, setSongProgressSeconds] = useState(null);
+    const [songProgressBarWidth, setSongProgressBarWidth] = useState(null);
 
     const [interval, setPlayerInterval] = useState(null);
 
@@ -38,36 +42,38 @@ function Player(props) {
                 setLoaded(true);
             }
         );
+        
         props.spotify
-            .getMyCurrentPlayingTrack()
-            .then((currentTrackData) => {
-                console.log('CurrentTrackInfo: ', currentTrackData);
-                console.log('isCurrentlyPlaying: ', isCurrentlyPlaying);
+            .getMyDevices()
+            .then((deviceData) => {
+                console.log('devicesData: ', deviceData);
             }
         );
+
         props.spotify
             .getMyRecentlyPlayedTracks()
             .then((recentlyPlayedTracks) => {
-                console.log('recentlyPlayedInfo: ', recentlyPlayedTracks);
                 setRecentlyPlayed(recentlyPlayedTracks);
             }
         );
     }, []);
 
     useEffect(() => {
+        let currentSongPercentage = (songProgressSeconds / songDurationSeconds) * 100;
+        setSongProgressBarWidth({
+            width: `${currentSongPercentage}%`
+        });
+
         if (currentSecondCount === 60) {
-            console.log('got to reset mins and seconds');
             setCurrentMinuteCount(currentMinuteCount => parseInt(currentMinuteCount) + 1);
-            SetCurrentSecondCount(0);
+            setCurrentSecondCount(0);
         }
 
         if (currentMinuteCount >= songMinutesTotal && currentSecondCount >= songSecondsTotal){
-            console.log('switching songs');
             props.spotify
                 .getMyCurrentPlayingTrack()
                 .then((playbackData) => {
                     restartTimer();
-                    console.log('playbackInfo', playbackData);
                     setInterval(null);
                     setPlaybackAndCurrentlyPlayingStates(playbackData);
                 }
@@ -77,12 +83,13 @@ function Player(props) {
 
     const restartTimer = () => {
         setCurrentMinuteCount(0);
-        SetCurrentSecondCount(0);
+        setCurrentSecondCount(0);
     }
 
     const startTimer = () => {
         setPlayerInterval(setInterval(() => {
-            SetCurrentSecondCount(currentSecondCount => parseInt(currentSecondCount) + 1);
+            setCurrentSecondCount(currentSecondCount => parseInt(currentSecondCount) + 1);
+            setSongProgressSeconds(songProgressSeconds => parseInt(songProgressSeconds) + 1);
         }, 1000));
     }
 
@@ -94,22 +101,38 @@ function Player(props) {
         setPlaybackTrack(playbackData.item);
         setAlbumImage(playbackData.item.album.images[0].url);
         setSongPlaying(playbackData.is_playing);
-        console.log(isSongPlaying);
+
         let songTimeTotal = millisToMinsAndSecs(playbackData.item.duration_ms);
         setMinutesTotal(songTimeTotal[0]);
-        setSecondsTotal(songTimeTotal[1] - 1);
-        console.log('progressMS: ', playbackData.progress_ms);
+        setSecondsTotal(songTimeTotal[1]);
+
+        let songDuration = parseInt((songTimeTotal[0] * 60)) + parseInt(songTimeTotal[1]);
+        console.log('songDuration: ', songDuration)
+        setSongDurationSeconds(songDuration);
         let currentProgress = playbackData.progress_ms;
         let songPlaybackTime = millisToMinsAndSecs(currentProgress);
+
         setCurrentMinuteCount(songPlaybackTime[0]);
-        SetCurrentSecondCount(songPlaybackTime[1]);
+        setCurrentSecondCount(songPlaybackTime[1] - 2);
+
+        console.log('playbackMins: ', songPlaybackTime[0], songPlaybackTime[1]);
+
+        let songProgress = parseInt((songPlaybackTime[0] * 60)) + parseInt(songPlaybackTime[1]);
+        console.log('songProgress: ', songProgress);
+        setSongProgressSeconds(songProgress);
+        console.log('')
+
+        let currentSongPercentage = Math.round((songProgress / songDuration) * 100);
+        console.log('CurrentSongPercentage: ', currentSongPercentage);
+
+        setSongProgressBarWidth({
+            width: `${Math.round(currentSongPercentage)}%`
+        });
     }
 
     const millisToMinsAndSecs = (ms) => {
         let minutes = Math.floor(ms / 60000);
         let seconds = ((ms % 60000) / 1000).toFixed(0);
-        console.log('timeCalculated: ', [minutes, seconds]);
-        console.log('reloaded')
         return [minutes, seconds];
     }
 
@@ -207,6 +230,9 @@ function Player(props) {
                                 { currentMinuteCount }:{(currentSecondCount < 10 ? '0' : '')}{ currentSecondCount }
                             </div>
                             <div className='player-progress-bar-background'>
+                                <div
+                                    style={songProgressBarWidth}    
+                                    className='player-progress-bar-overlay' />
                             </div>
                             <div className='player-timer player-timer-right'>
                                 { songMinutesTotal }:{(songSecondsTotal < 10 ? '0' : '')}{ songSecondsTotal }

@@ -36,7 +36,7 @@
     background-color: transparent;
     border: none;
     text-align: start;
-    color: #b3b3b3;
+    color: white;
     left: 75px;
 }
 
@@ -91,6 +91,19 @@
     background-color: #4f4f4f;
     border-radius: 5px;
     bottom: 10px;
+    z-index: 0;
+}
+
+.player-progress-bar-overlay {
+    position: absolute;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    height: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #b3b3b3;
+    border-radius: 5px;
+    z-index: 1;
 }
 
 .player-timer {

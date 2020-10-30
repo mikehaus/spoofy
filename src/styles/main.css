@@ -22,7 +22,7 @@
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
-    background-color: #212121;
+    background-color: #212121
 }
 
 .header {
@@ -30,7 +30,7 @@
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 2;
-    background-color: #121212;    
+    background-color: #121212;  
 }
 
 .footer {

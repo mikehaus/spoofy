@@ -6,6 +6,7 @@ import { RiAddCircleLine } from 'react-icons/ri';
 import { IconContext } from "react-icons";
 import '../../styles/main.css';
 import '../../styles/nav/sidebar.css';
+import { act } from 'react-dom/test-utils';
 
 function SidebarListMain(props) {
     
@@ -36,8 +37,15 @@ function SidebarListPlaylists(props) {
     const listItems = links.map((playlist, index) =>
         <button 
           className='links-in-list playlist-library-button'
-          key={index} >
-            {playlist.name}
+          key={index}
+          onClick={props.toggleActive} >
+            { (props.activeNav === playlist.name) ? 
+                <div className='selected' /> :
+                null
+            }
+            <div className='link-text'>
+                {playlist.name}
+            </div>
         </button>
     );
 
@@ -56,11 +64,29 @@ function SideBar(props) {
      * NewPlaylist Container */
 
     const [userPlaylists, setPlaylists] = useState(null);
-    const [isLoaded, setLoaded] = useState(false)
+    const [isLoaded, setLoaded] = useState(false);
+    const [activeNav, setActiveNav] = useState('Home')
+
+    useEffect(() => {
+        props.spotify
+            .getUserPlaylists()
+            .then((data) => {
+                console.log('Playlists: ', data);
+                setPlaylists(data);
+                setLoaded(true);
+            })
+    }, []);
 
     const getInfo = (e) => {
         console.log(e);
         console.log('get info from sidebar');
+    }
+
+    const toggleActive = (e) => {
+        e.preventDefault();
+        let mainNavBtnText = e.target.innerText;
+        console.log(mainNavBtnText);
+        setActiveNav(mainNavBtnText);
     }
 
     const playlist_list = [
@@ -90,21 +116,18 @@ function SideBar(props) {
         }
     ];
 
-    useEffect(() => {
-        props.spotify
-            .getUserPlaylists()
-            .then((data) => {
-                console.log('Playlists: ', data);
-                setPlaylists(data);
-                setLoaded(true);
-            })
-      }, [])
-
     return (
         <div className='sidebar'>
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
-                    <button className='main-nav-btn'>
+                    <button className='main-nav-btn'
+                        onClick={toggleActive}>
+                        { activeNav === 'Home' ? (
+                            <div className='selected' />    
+                                ) : (
+                                    null
+                            ) 
+                        }
                         <div className='main-nav-btn-icon'>
                             <IconContext.Provider 
                                 value={{ size: "20px" }}>
@@ -113,9 +136,18 @@ function SideBar(props) {
                                 </div>
                             </IconContext.Provider>
                         </div>
-                        <div className='main-nav-btn-text'>Home</div>
+                        <div className='main-nav-btn-text'>
+                            Home
+                        </div>
                     </button>    
-                    <button className='main-nav-btn'>
+                    <button className='main-nav-btn'
+                        onClick={toggleActive}>
+                        { activeNav === 'Browse' ? (
+                            <div className='selected' />    
+                                ) : (
+                                    null
+                            ) 
+                        } 
                         <div className='main-nav-btn-icon'>
                             <IconContext.Provider 
                                 value={{ size: "20px" }}>
@@ -126,7 +158,14 @@ function SideBar(props) {
                         </div>
                         <div className='main-nav-btn-text'>Browse</div>
                     </button>
-                    <button className='main-nav-btn'>
+                    <button className='main-nav-btn'
+                        onClick={toggleActive}>
+                        { activeNav === 'Radio' ? (
+                            <div className='selected' />    
+                                ) : (
+                                    null
+                            ) 
+                        }
                         <div className='main-nav-btn-icon'>
                             <IconContext.Provider 
                                 value={{ size: "20px" }}>
@@ -150,15 +189,17 @@ function SideBar(props) {
                         { isLoaded ? (
                             <SidebarListPlaylists
                                 getInfo={getInfo}
-                                linkList={userPlaylists} /> ) : (
-                            null
+                                linkList={userPlaylists}
+                                toggleActive={toggleActive} /> 
+                            ) : (                            
+                                null
                             )
                         }
                     </div>
                 </div>
                 <div className='bottom-sidebar'>
                     <button className='playlist-create-btn'>
-                        <div className='main-nav-btn-icon'>
+                        <div className='playlist-create-nav-btn-icon'>
                             <IconContext.Provider 
                                 value={{ size: "30px" }}>
                                 <div>
@@ -166,7 +207,7 @@ function SideBar(props) {
                                 </div>
                             </IconContext.Provider>
                         </div>
-                        <div className='main-nav-btn-text'>New Playlist</div>
+                        <div className='playlist-create-nav-btn-text'>New Playlist</div>
                     </button>
                 </div>
             </div>

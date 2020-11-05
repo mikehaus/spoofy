@@ -85,9 +85,10 @@
     grid-column-end: 2;
     top: 4px;
     height: 4px;
+    left: 2px;
     margin-left: auto;
     margin-right: auto;
-    width: calc(100% - 30px);
+    width: calc(100% - 40px);
     background-color: #4f4f4f;
     border-radius: 5px;
     bottom: 10px;

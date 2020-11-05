@@ -32,14 +32,14 @@ function SidebarListMain(props) {
 function SidebarListPlaylists(props) {
     
     const links = props.linkList.items;
-    console.log(links);
+    let activeNav = props.activeNav;
     const route = 'http://localhost:3000/home/';
-    const listItems = links.map((playlist, index) =>
+    const listItems = links.map((playlist, index) => 
         <button 
-          className='links-in-list playlist-library-button'
+          className='links-in-list playlist-library-btn'
           key={index}
           onClick={props.toggleActive} >
-            { (props.activeNav === playlist.name) ? 
+            { activeNav === playlist.name ? 
                 <div className='selected' /> :
                 null
             }
@@ -190,6 +190,7 @@ function SideBar(props) {
                             <SidebarListPlaylists
                                 getInfo={getInfo}
                                 linkList={userPlaylists}
+                                activeNav={activeNav}
                                 toggleActive={toggleActive} /> 
                             ) : (                            
                                 null

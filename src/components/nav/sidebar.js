@@ -8,17 +8,23 @@ import '../../styles/main.css';
 import '../../styles/nav/sidebar.css';
 import { act } from 'react-dom/test-utils';
 
-function SidebarListMain(props) {
+function SidebarListLibrary(props) {
     
     const links = props.linkList;
+    let activeNav = props.activeNav;
     const route = 'http://localhost:3000/home/';
     const listItems = links.map((item, index) =>
         <button
-          className='links-in-list playlist-library-link'
+          className='links-in-list playlist-library-btn'
           key={index}
-          onClick={() => 
-            props.getInfo(item.data)} >
-            {item.data}
+          onClick={props.toggleActive} >
+            { activeNav === item.data ?
+                <div className='selected' /> :
+                null 
+            }
+            <div className='link-text'>
+                {item.data}
+            </div>
         </button>
     );
 
@@ -77,16 +83,18 @@ function SideBar(props) {
             })
     }, []);
 
-    const getInfo = (e) => {
-        console.log(e);
-        console.log('get info from sidebar');
+    const toggleLibraryPlaylistActive = (e) => {
+        e.preventDefault();
+        let playlistNameText = e.target.innerText;
+        console.log(playlistNameText);
+        setActiveNav(playlistNameText);
     }
 
-    const toggleActive = (e) => {
+    const toggleMainNavActive = (e) => {
         e.preventDefault();
-        let mainNavBtnText = e.target.innerText;
-        console.log(mainNavBtnText);
-        setActiveNav(mainNavBtnText);
+        let mainBtnText = e.target.innerText;
+        console.log(mainBtnText);
+        setActiveNav(mainBtnText)
     }
 
     const playlist_list = [
@@ -121,7 +129,7 @@ function SideBar(props) {
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
                     <button className='main-nav-btn'
-                        onClick={toggleActive}>
+                        onClick={toggleMainNavActive}>
                         { activeNav === 'Home' ? (
                             <div className='selected' />    
                                 ) : (
@@ -141,7 +149,7 @@ function SideBar(props) {
                         </div>
                     </button>    
                     <button className='main-nav-btn'
-                        onClick={toggleActive}>
+                        onClick={toggleMainNavActive}>
                         { activeNav === 'Browse' ? (
                             <div className='selected' />    
                                 ) : (
@@ -159,7 +167,7 @@ function SideBar(props) {
                         <div className='main-nav-btn-text'>Browse</div>
                     </button>
                     <button className='main-nav-btn'
-                        onClick={toggleActive}>
+                        onClick={toggleMainNavActive}>
                         { activeNav === 'Radio' ? (
                             <div className='selected' />    
                                 ) : (
@@ -180,18 +188,18 @@ function SideBar(props) {
                 <div className='main-sidebar-nav'>
                     <h6>YOUR LIBRARY</h6>
                     <div className='link-list'>
-                        <SidebarListMain
-                            getInfo={getInfo}
+                        <SidebarListLibrary
+                            activeNav={activeNav}
+                            toggleActive={toggleLibraryPlaylistActive}
                             linkList={playlist_list} />
                     </div>
                     <h6>PLAYLISTS</h6>
                     <div className='link-list'>
                         { isLoaded ? (
                             <SidebarListPlaylists
-                                getInfo={getInfo}
                                 linkList={userPlaylists}
                                 activeNav={activeNav}
-                                toggleActive={toggleActive} /> 
+                                toggleActive={toggleLibraryPlaylistActive} /> 
                             ) : (                            
                                 null
                             )

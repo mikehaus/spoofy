@@ -71,7 +71,8 @@ function SideBar(props) {
 
     const [userPlaylists, setPlaylists] = useState(null);
     const [isLoaded, setLoaded] = useState(false);
-    const [activeNav, setActiveNav] = useState('Home')
+    const [activeNav, setActiveNav] = useState('Home');
+    const [categories, setCategories] = useState(null);
 
     useEffect(() => {
         props.spotify
@@ -80,21 +81,15 @@ function SideBar(props) {
                 console.log('Playlists: ', data);
                 setPlaylists(data);
                 setLoaded(true);
-            })
+            });
     }, []);
 
-    const toggleLibraryPlaylistActive = (e) => {
+    const toggleActive = (e) => {
         e.preventDefault();
-        let playlistNameText = e.target.innerText;
-        console.log(playlistNameText);
-        setActiveNav(playlistNameText);
-    }
-
-    const toggleMainNavActive = (e) => {
-        e.preventDefault();
-        let mainBtnText = e.target.innerText;
-        console.log(mainBtnText);
-        setActiveNav(mainBtnText)
+        let nameText = e.target.innerText;
+        console.log(nameText);
+        setActiveNav(nameText);
+        props.changeCurrentView(e.nameText);
     }
 
     const playlist_list = [
@@ -129,7 +124,7 @@ function SideBar(props) {
             <div className='sidebar-container'>
                 <div className='main-nav-btn-container'>
                     <button className='main-nav-btn'
-                        onClick={toggleMainNavActive}>
+                        onClick={toggleActive}>
                         { activeNav === 'Home' ? (
                             <div className='selected' />    
                                 ) : (
@@ -149,7 +144,7 @@ function SideBar(props) {
                         </div>
                     </button>    
                     <button className='main-nav-btn'
-                        onClick={toggleMainNavActive}>
+                        onClick={toggleActive}>
                         { activeNav === 'Browse' ? (
                             <div className='selected' />    
                                 ) : (
@@ -167,7 +162,7 @@ function SideBar(props) {
                         <div className='main-nav-btn-text'>Browse</div>
                     </button>
                     <button className='main-nav-btn'
-                        onClick={toggleMainNavActive}>
+                        onClick={toggleActive}>
                         { activeNav === 'Radio' ? (
                             <div className='selected' />    
                                 ) : (
@@ -190,7 +185,7 @@ function SideBar(props) {
                     <div className='link-list'>
                         <SidebarListLibrary
                             activeNav={activeNav}
-                            toggleActive={toggleLibraryPlaylistActive}
+                            toggleActive={toggleActive}
                             linkList={playlist_list} />
                     </div>
                     <h6>PLAYLISTS</h6>
@@ -199,7 +194,7 @@ function SideBar(props) {
                             <SidebarListPlaylists
                                 linkList={userPlaylists}
                                 activeNav={activeNav}
-                                toggleActive={toggleLibraryPlaylistActive} /> 
+                                toggleActive={toggleActive} /> 
                             ) : (                            
                                 null
                             )

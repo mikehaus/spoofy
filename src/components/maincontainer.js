@@ -17,8 +17,15 @@ class MainContainer extends React.Component {
         super(props);
         this.state = {
             userEmail: props.userEmail,
-            spotify: props.spotify
+            spotify: props.spotify,
+            currentView: 'Home'
         };
+        this.changeCurrentView = this.changeCurrentView.bind(this);
+    }
+
+    changeCurrentView = (viewName) => {
+        console.log('viewChangingTo: ', viewName);
+        this.setState({ currentView: viewName });
     }
 
     render () {
@@ -28,9 +35,11 @@ class MainContainer extends React.Component {
                         spotify={this.state.spotify}/>
                     <SideBar 
                         spotify={this.state.spotify}
-                        userEmail={this.state.userEmail} />
+                        userEmail={this.state.userEmail}
+                        changeCurrentView={this.state.changeCurrentView} />
                     <NavWindowView
-                        spotify={this.state.spotify} />
+                        spotify={this.state.spotify}
+                        currentView={this.state.currentView} />
                     <Player 
                         spotify={this.state.spotify} />
                 </div>

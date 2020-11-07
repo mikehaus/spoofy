@@ -1,0 +1,25 @@
+.title-header {
+    margin: 0;
+    position: fixed;
+    background-color: transparent;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 16pt;
+    font-weight: 700;
+    background-color: #121212;
+    justify-content: center;
+    border-bottom: 1px solid #444;
+}
+
+.title-heading-text {
+    position: relative;
+    top: 15px;
+    text-indent: 25px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    background-color: #121212;  
+}

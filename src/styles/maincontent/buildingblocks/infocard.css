@@ -1,38 +1,38 @@
-.info-card-wrapper {
+.info-card__wrapper {
     margin: 0px;
     padding: 0px;
     display: grid;
     grid-template-rows: auto auto auto auto;
 }
 
-.info-card-display-img {
+.info-card__display-img {
     grid-row: 1;
     border: none;
 }
 
-.info-card-display-img:focus {
+.info-card__display-img:focus {
     outline: 0;
 }
 
-.info-card-display-img:hover {
+.info-card__display-img:hover {
     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
 }
 
-.info-card-title {
+.info-card__title {
     grid-row: 2;
     color: white;
     font-size: 10pt;
     font-weight: 500;
 }
 
-.info-card-description {
+.info-card-artist__description {
     grid-row: 3;
     color: #b3b3b3;
     font-size: 9pt;
     font-weight: 500;
 }
 
-.info-card-followers {
+.info-card__followers {
     grid-row: 4;
     color: #b3b3b3;
     font-size: 8pt;

@@ -7,12 +7,12 @@ function HomeView(props) {
     
 
     return (
-        <div className='home-wrapper'>
-            <div className='title-text'>
+        <div className='home__wrapper'>
+            <div className='title__text'>
                 <MainTitleHeading
                     title={props.title} />
             </div>
-            <div className='home-main-content'>
+            <div className='home__main-content'>
 
             </div>
         </div>

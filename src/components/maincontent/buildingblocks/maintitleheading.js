@@ -3,8 +3,8 @@ import '../../../styles/maincontent/buildingblocks/maintitleheading.css';
 
 function MainTitleHeading(props) {
     return (
-        <div className='title-header'>
-            <div className='title-heading-text'>
+        <div className='title__header'>
+            <div className='title__heading-text'>
                 {props.title}
             </div>
         </div>

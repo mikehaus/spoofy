@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import InfoCard from './infocard';
 import Slider from 'react-slider';
 
 function CardList(props) {
     
-    const infolist = props.infolist;
-    const listitems = infolist.map((item, index) =>
+    const infoList = props.infoList;
+    const listitems = infoList.map((item, index) =>
         <InfoCard
             index={index} />
     );
@@ -17,18 +17,13 @@ function CardList(props) {
     );
 }
 
-export default class Carousel extends Component {
-    
-    constructor(orops) {
-        super(props);
-        this.state = {
+function Carousel(props) {
 
-        }
-    }
+    const [displayedInfo, setDisplayedInfo] = useState(null);
 
-    componentDidMount = (props) => {
-
-    }
+    useEffect(() => {
+        setDisplayedInfo(props.displayedInfo);
+    })
 
     render() {
         var settings = {
@@ -62,7 +57,9 @@ export default class Carousel extends Component {
         return(
             <div>
                 <Slider {...settings}>
-                    <CardList />
+                    <CardList
+                        infoList={displayedInfo}
+                         />
                 </Slider>
             </div>
         );

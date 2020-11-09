@@ -1,0 +1,38 @@
+.carousel-container__wrapper {
+    width: 100%;
+    height: 33%;
+    max-height: 300px;
+}
+
+.carousel-container__header {
+    display: grid;
+    grid-template-columns: 100px calc(100% - 150px) 50px;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+.carousel-container__header--title {
+    color: white;
+    grid-column: 1;
+    font-weight: 500;
+}
+
+.carousel-container__header--spacer {
+    grid-column: 2;
+}
+
+.carousel-container__header--btn-wrapper {
+    grid-column: 3;
+}
+
+.carousel-container__header--btn-grid {
+    display: grid;
+    grid-template-columns: 25px 25%;
+}
+
+.carousel-container__header--btn-left {
+    grid-column: 1;
+}
+
+.carousel-container__header--btn-right {
+    grid-column: 2;
+}

@@ -24,6 +24,11 @@ function Carousel(props) {
 
     useEffect(() => {
         setDisplayedInfo(props.displayedInfo);
+        console.log('carouselDisplayedInfo: ', displayedInfo);
+    }, [displayedInfo]);
+
+    useEffect(() => {
+        setDisplayedInfo(props.displayedInfo);
         let carouselSettings = {
             dots: false,
             infinite: false,
@@ -53,14 +58,13 @@ function Carousel(props) {
             }]
         };
         setSettings(carouselSettings);
-    });
+    }, []);
 
     return(
         <div>
             <Slider {...settings}>
-                <CardList
-                    infoList={displayedInfo}
-                        />
+                {/*<CardList
+                    infoList={displayedInfo} />*/}
             </Slider>
         </div>
     );

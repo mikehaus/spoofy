@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../styles/maincontent/buildingblocks/carouselcontainer.css'
 import Carousel from './carousel';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
@@ -6,6 +6,12 @@ import { AiOutlineDown } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 
 function CarouselContainer(props) {
+
+    const [carouselInfo, setCarouselInfo] = useState(null);
+
+    useEffect(() => {
+        setCarouselInfo(props.carouselInfo)
+    }, [carouselInfo]);
 
     return (
         <div className='carousel-container__wrapper'>
@@ -25,7 +31,8 @@ function CarouselContainer(props) {
                 </IconContext.Provider>
             </div>
             <div>
-
+                <Carousel 
+                    displayedInfo={carouselInfo} />
             </div>
         </div>
     );

@@ -12,10 +12,10 @@ function HomeView(props) {
         props.spotify
             .getMyTopTracks()
             .then((topData) => {
-                console.log('topTracksDataHome: ', topData);
                 setTopTracksRecommended(topData);
+                console.log('topTracksRecommendedHome: ', topData);
             })
-    }, [])
+    }, []);
 
     return (
         <div className='home__wrapper'>
@@ -25,7 +25,8 @@ function HomeView(props) {
             </div>
             <div className='home__main-content'>
                 <div className='home__top-spacer' />
-                <CarouselContainer />
+                <CarouselContainer
+                    carouselInfo={topTracksRecommended} />
             </div>
         </div>
     );

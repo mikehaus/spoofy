@@ -80,3 +80,5 @@ function InfoCard(props) {
         </div>
     );
 }
+
+export default InfoCard

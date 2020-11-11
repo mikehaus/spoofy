@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import InfoCard from './infocard';
-import Slider from 'react-slider';
+import Slider from 'react-slick';
 
 function CardList(props) {
     
@@ -20,13 +20,11 @@ function CardList(props) {
 function Carousel(props) {
 
     const [displayedInfo, setDisplayedInfo] = useState(null);
+    const [settings, setSettings] = useState(null);
 
     useEffect(() => {
         setDisplayedInfo(props.displayedInfo);
-    })
-
-    render() {
-        var settings = {
+        let carouselSettings = {
             dots: false,
             infinite: false,
             speed: 500,
@@ -51,17 +49,22 @@ function Carousel(props) {
                         initialSlide: 2,
                         dots: false
                     }
-
+    
             }]
         };
-        return(
-            <div>
-                <Slider {...settings}>
-                    <CardList
-                        infoList={displayedInfo}
-                         />
-                </Slider>
-            </div>
-        );
-    }
+        setSettings(carouselSettings);
+    });
+
+    return(
+        <div>
+            <Slider {...settings}>
+                <CardList
+                    infoList={displayedInfo}
+                        />
+            </Slider>
+        </div>
+    );
+
 }
+
+export default Carousel;

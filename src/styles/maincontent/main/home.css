@@ -1,9 +1,20 @@
 .home__wrapper {
     margin: 0px;
     padding: 0px;
+    height: 100%;
+}
+
+.home__content-spacer {
+    height: 10px;
+}
+
+.home__top-spacer {
+    height: 35px;
 }
 
 .home__main-content {
     margin: 0;
     padding: 25px;
+    height: calc(100% - 60px);
+    overflow-y: auto;
 }

@@ -12,7 +12,8 @@ function NavWindowView(props) {
         <div className='main-window-container'>
             { props.currentView === 'Home' ?
                 <HomeView 
-                    title={props.currentView} /> : null
+                    title={props.currentView}
+                    spotify={props.spotify} /> : null
             }
         </div>
     )

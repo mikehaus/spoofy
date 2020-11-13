@@ -5,17 +5,10 @@ import Carousel from '../buildingblocks/carousel';
 import '../../../styles/maincontent/main/home.css';
 
 function HomeView(props) {
-
-    const [topTracksRecommended, setTopTracksRecommended] = useState(null);
     
     useEffect(() => {
-        props.spotify
-            .getMyTopTracks()
-            .then((topData) => {
-                setTopTracksRecommended(topData);
-                console.log('topTracksRecommendedHome: ', topData);
-            })
-    }, []);
+        console.log('loading in home...')
+    }, [props.topTracksRecommended, props.recentlyPlayed]);
 
     return (
         <div className='home__wrapper'>
@@ -26,7 +19,11 @@ function HomeView(props) {
             <div className='home__main-content'>
                 <div className='home__top-spacer' />
                 <CarouselContainer
-                    carouselInfo={topTracksRecommended} />
+                    title='Shortcuts'
+                    carouselInfo={props.topTracksRecommended} />
+                <CarouselContainer
+                    title='Recently played'
+                    carouselInfo={props.recentlyPlayed} />
             </div>
         </div>
     );

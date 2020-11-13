@@ -13,6 +13,8 @@ function NavWindowView(props) {
             { props.currentView === 'Home' ?
                 <HomeView 
                     title={props.currentView}
+                    topTracksRecommended={props.topTracksRecommended}
+                    recentlyPlayed={props.recentlyPlayed}
                     spotify={props.spotify} /> : null
             }
         </div>

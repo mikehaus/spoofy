@@ -8,7 +8,7 @@
 
 .carousel-container__header {
     display: grid;
-    grid-template-columns: 100px calc(100% - 180px) 40px 40px;
+    grid-template-columns: 200px calc(100% - 280px) 40px 40px;
     border-bottom: 1px solid #333;
 }
 

@@ -10,14 +10,14 @@ function CarouselContainer(props) {
     const [carouselInfo, setCarouselInfo] = useState(null);
 
     useEffect(() => {
-        setCarouselInfo(props.carouselInfo)
+        setCarouselInfo(props.carouselInfo);
     }, [carouselInfo]);
 
     return (
         <div className='carousel-container__wrapper'>
             <div className='carousel-container__header'>
                 <div className='carousel-container__header--title'>
-                    Test
+                    {props.title}
                 </div>
                 <div className='carousel-container__header--spacer' />
                 <IconContext.Provider 

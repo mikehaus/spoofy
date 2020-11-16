@@ -42,7 +42,6 @@ class MainContainer extends React.Component {
     }
     
     changeCurrentView = (viewName) => {
-        console.log('viewChangingTo: ', viewName);
         this.setState({ currentView: viewName });
     }
 

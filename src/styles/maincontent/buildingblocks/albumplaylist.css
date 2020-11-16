@@ -1,0 +1,33 @@
+.album-playlist__wrapper {
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-rows: 300px auto;
+}
+
+.album-playlist__header--wrapper {
+    width: 100%;
+    grid-row: 1;
+}
+
+.album-playlist__header--grid {
+    display: grid;
+    grid-template-columns: 300px calc(100% - 400px) 100px;
+}
+
+.album-playlist__header--img {
+    grid-column: 1;
+}
+
+.album-playlist__header--info-section {
+    grid-column: 2;
+}
+
+.album-playlist__header--follower-count {
+    grid-column: 3;
+}
+
+.album-playlist__main-container {
+    grid-row: 2;
+}

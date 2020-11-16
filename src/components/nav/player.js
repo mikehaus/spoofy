@@ -13,6 +13,7 @@ function Player(props) {
     const [recentlyPlayed, setRecentlyPlayed] = useState(null);
     const [currentlyPlaying, updateCurrentlyPlaying] = useState(null);
     const [isCurrentlyPlaying, setIsCurrentlyPlaying] = useState(false);
+    const [songSkipped, setSongSkipped] = useState(false);
     const [isLoaded, setLoaded] = useState(false);
     const [currentMinuteCount, setCurrentMinuteCount] = useState(0);
     const [currentSecondCount, setCurrentSecondCount] = useState(0);

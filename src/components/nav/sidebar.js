@@ -78,7 +78,6 @@ function SideBar(props) {
         props.spotify
             .getUserPlaylists()
             .then((data) => {
-                console.log('Playlists: ', data);
                 setPlaylists(data);
                 setLoaded(true);
             });
@@ -87,9 +86,8 @@ function SideBar(props) {
     const toggleActive = (e) => {
         e.preventDefault();
         let nameText = e.target.innerText;
-        console.log(nameText);
         setActiveNav(nameText);
-        props.changeCurrentView(e.nameText);
+        props.changeCurrentView(nameText);
     }
 
     const playlist_list = [

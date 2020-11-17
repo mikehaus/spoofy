@@ -14,6 +14,7 @@
 .album-playlist__header--grid {
     display: grid;
     grid-template-columns: 300px calc(100% - 400px) 100px;
+    grid-template-rows: auto 42px;
 }
 
 .album-playlist__header--img {
@@ -24,10 +25,82 @@
     grid-column: 2;
 }
 
+.album-playlist__header--bottom-container {
+    grid-row: 2
+}
+
 .album-playlist__header--follower-count {
     grid-column: 3;
 }
 
 .album-playlist__main-container {
     grid-row: 2;
+}
+
+.album-playlist__header--info-type {
+    display: block;
+    font-size: 8pt;
+    font-weight: 300;
+    color: white;
+}
+
+.album-playlist__header--title {
+    display: block;
+    font-size: 42pt;
+    font-weight: 600;
+}
+
+.album-playlist__header--desc {
+    font-size: 8pt;
+    color: #b3b3b3;
+}
+
+.album-playlist__header--artist-section {
+    display: block;
+    font-size: 8pt;
+    color: #b3b3b3;
+}
+
+.album-playlist__header--artist {
+    color: white;
+}
+
+.album-playlist__header--other-info {
+    color: #b3b3b3;
+    font-size: 8pt;
+    font-weight: 300;
+}
+
+.album-playlist__header--btn-grid {
+    display: grid;
+    grid-template-columns: 100px 42px 42px;
+}
+
+.a-p__header--btn-play {
+    grid-column: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #1DB954;
+    color: white;
+    font-size: 8pt;
+    border-radius: 25%; 
+    align-content: center;
+}
+
+.a-p__header--btn-play:hover {
+    width: 110%;
+    height: 110%;
+    background-color: #1ec95a;
+}
+
+button:active {
+    outline: none;
+}
+
+.a-p__header--btn-favorite {
+    grid-column: 2;
+}
+
+.a-p__header--btn-rest {
+    grid-column: 3;
 }

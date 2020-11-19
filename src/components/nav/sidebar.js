@@ -49,7 +49,7 @@ function SidebarListPlaylists(props) {
                 <div className='selected' /> :
                 null
             }
-            <div className='link-text'>
+            <div className='link-text' id={playlist.id}>
                 {playlist.name}
             </div>
         </button>
@@ -86,8 +86,16 @@ function SideBar(props) {
     const toggleActive = (e) => {
         e.preventDefault();
         let nameText = e.target.innerText;
+        let id = e.target.id;
         setActiveNav(nameText);
-        props.changeCurrentView(nameText);
+        if (nameText === 'Home' || nameText=='Browse' || nameText==='Radio') {
+            props.changeCurrentView(nameText);
+        } else {
+            console.log('ID ', id);
+            props.changeCurrentView('AlbumPlaylist');
+            props.setId(id);
+            props.setAlbumOrPlaylist('playlist');
+        }
     }
 
     const playlist_list = [

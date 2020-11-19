@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import HomeView from '../maincontent/main/home';
+import AlbumPlaylistView from '../maincontent/buildingblocks/albumplaylist';
 import '../../styles/main.css';
 
 function NavWindowView(props) {
@@ -16,7 +17,12 @@ function NavWindowView(props) {
                     topTracksRecommended={props.topTracksRecommended}
                     recentlyPlayed={props.recentlyPlayed}
                     spotify={props.spotify} /> : null
-            }
+            } { props.currentView === 'AlbumPlaylist' ?
+                <AlbumPlaylistView
+                    albumPlaylistId={props.albumPlaylistId}
+                    albumOrPlaylist={props.albumOrPlaylist}
+                    spotify={props.spotify} /> : null
+            }   
         </div>
     )
 }

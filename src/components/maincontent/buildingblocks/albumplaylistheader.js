@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { CgMoreO } from 'react-icons/cg';
+import { IconContext } from "react-icons";
 import '../../../styles/maincontent/buildingblocks/albumplaylist.css';
 
 /*
@@ -15,6 +16,7 @@ import '../../../styles/maincontent/buildingblocks/albumplaylist.css';
  * year - year album
  * creator - who created it (Playlist only)
  * description - description of Playlist (Playlist only)
+ * albumImgUrl - Image url for playlist or album
  */ 
 
 
@@ -40,7 +42,7 @@ function AlbumPlaylistHeader(props) {
         <div className='album-playlist'>
             <div className='album-playlist__header--grid'>
                 <div className='album-playlist__header--img'>
-
+                    <img width='250px' height='250px' src={props.albumImgUrl} />
                 </div>
                 <div className='album-playlist__header--info-section'>
                     <div className='album-playlist__header--info-type'>

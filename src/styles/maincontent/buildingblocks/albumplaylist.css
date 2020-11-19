@@ -6,6 +6,8 @@
     grid-template-rows: 300px auto;
 }
 
+/* ALBUM PLAYLIST HEADER SECTION */
+
 .album-playlist__header--wrapper {
     width: 100%;
     grid-row: 1;
@@ -104,3 +106,7 @@ button:active {
 .a-p__header--btn-rest {
     grid-column: 3;
 }
+
+/* ALBUM PLAYLIST HEADER SECTION END */
+
+/* ALBUM PLAYLIST TABLE SECTION */

@@ -10,6 +10,7 @@ import Player from './nav/player';
 import NavWindowView from './nav/navwindow';
 import keys from '../api/spotify';
 import '../styles/main.css';
+import { FiThumbsDown } from 'react-icons/fi';
 
 class MainContainer extends React.Component {
 
@@ -20,11 +21,17 @@ class MainContainer extends React.Component {
             spotify: props.spotify,
             currentView: 'Home',
             topTracksRecommended: null,
-            recentlyPlayed: null
+            recentlyPlayed: null,
+            playlists: null,
+            playlistAlbumId: null,
+            albumOrPlaylist: null,
         };
         this.changeCurrentView = this.changeCurrentView.bind(this);
         this.setTopTracksRecommended = this.setTopTracksRecommended.bind(this);
         this.setRecentlyPlayed = this.setRecentlyPlayed.bind(this);
+        this.setPlaylists = this.setPlaylists.bind(this);
+        this.setPlaylistAlbumId = this.setPlaylistAlbumId.bind(this);
+        this.setAlbumOrPlaylist = this.setAlbumOrPlaylist.bind(this);
     }
 
     componentDidMount = () => {
@@ -39,6 +46,11 @@ class MainContainer extends React.Component {
             .then((recentlyPlayedData) => {
                 this.setRecentlyPlayed(recentlyPlayedData);
             });
+        this.state.spotify
+            .getUserPlaylists()
+            .then((data) => {
+                this.setPlaylists(data);
+            });
     }
     
     changeCurrentView = (viewName) => {
@@ -50,7 +62,22 @@ class MainContainer extends React.Component {
     }
 
     setRecentlyPlayed = (recentlyPlayedData) => {
-        this.setState({ recentlyPlayed: recentlyPlayedData })
+        this.setState({ recentlyPlayed: recentlyPlayedData });
+    }
+
+    setPlaylists = (playlistData) => {
+        this.setState({ playlists: playlistData });
+        console.log('playlistData: ', playlistData);
+    }
+
+    setPlaylistAlbumId = (id) => {
+        this.setState({ playlistAlbumId: id });
+        console.log('Id through setPlaylistAlbumID: ', id);
+    }
+    
+    setAlbumOrPlaylist = (type) => {
+        this.setState({ albumOrPlaylist: type });
+        console.log('type: ', type);
     }
 
     render () {
@@ -61,12 +88,16 @@ class MainContainer extends React.Component {
                     <SideBar 
                         spotify={this.state.spotify}
                         userEmail={this.state.userEmail}
-                        changeCurrentView={this.changeCurrentView} />
+                        changeCurrentView={this.changeCurrentView}
+                        setId={this.setPlaylistAlbumId}
+                        setAlbumOrPlaylist={this.setAlbumOrPlaylist} />
                     <NavWindowView
                         spotify={this.state.spotify}
                         topTracksRecommended={this.state.topTracksRecommended}
                         recentlyPlayed={this.state.recentlyPlayed}
-                        currentView={this.state.currentView} />
+                        currentView={this.state.currentView}
+                        albumOrPlaylist={this.state.albumOrPlaylist}
+                        albumPlaylistId={this.state.playlistAlbumId} />
                     <Player 
                         spotify={this.state.spotify} />
                 </div>

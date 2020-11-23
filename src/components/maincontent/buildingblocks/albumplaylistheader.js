@@ -88,11 +88,11 @@ function AlbumPlaylistHeader(props) {
                         <button className='a-p__header--btn-play'
                             onClick={togglePlayingStateAlbumPlaylist}>
                             { isPlaying ? 
-                                <div>PAUSE</div> : <div>PAUSE</div>
+                                <div>PAUSE</div> : <div>PLAY</div>
                             }
                         </button>
                         <div className='a-p__header--btn-favorite'>
-                            <IconContext.Provider value={{ size: "20px" }}>
+                            <IconContext.Provider value={{ size: "36px", color: 'white' }}>
                                 <div>
                                     <HiOutlineHeart
                                         onClick={addToFavorites} />
@@ -100,7 +100,7 @@ function AlbumPlaylistHeader(props) {
                             </IconContext.Provider>
                         </div>
                         <div className='a-p__header--btn-rest'>
-                            <IconContext.Provider value={{ size: "20px" }}>
+                            <IconContext.Provider value={{ size: "30px", color: 'white' }}>
                                 <div>
                                     <CgMoreO
                                         onClick={openMenuModal} />

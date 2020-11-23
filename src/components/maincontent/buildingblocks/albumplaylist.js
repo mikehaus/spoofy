@@ -22,7 +22,8 @@ function AlbumPlaylistView(props) {
     return(
         <div className='album-playlist__wrapper'>
             <div className='album-playlist__header-wrapper'>
-                Test
+                <AlbumPlaylistHeader 
+                    playlist/>
             </div>
             <div className='album-playlist__table-wrapper'>
                 Test

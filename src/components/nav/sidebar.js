@@ -98,6 +98,13 @@ function SideBar(props) {
         }
     }
 
+    const toggleLibrary = (e) => {
+        e.preventDefault();
+        let nameText = e.target.innerText;
+        let id = e.target.id;
+        setActiveNav(nameText);
+    }
+
     const playlist_list = [
         {
             link: 'playlist_foryou',
@@ -191,7 +198,7 @@ function SideBar(props) {
                     <div className='link-list'>
                         <SidebarListLibrary
                             activeNav={activeNav}
-                            toggleActive={toggleActive}
+                            toggleActive={toggleLibrary}
                             linkList={playlist_list} />
                     </div>
                     <h6>PLAYLISTS</h6>

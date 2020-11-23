@@ -5,6 +5,9 @@ import '../../../styles/maincontent/buildingblocks/albumplaylist.css'
 function AlbumPlaylistView(props) {
     
     const [albumPlaylistData, setAlbumPlaylistData] = useState(null);
+    const [isPlaylist, setIsPlaylist] = useState(null);
+    const [isAlbum, setIsAlbum] = useState(null);
+    const [title, setTitle] = useState(null);
 
     useEffect(() => {
         console.log('loading AlbumPlaylistView');
@@ -14,8 +17,12 @@ function AlbumPlaylistView(props) {
                 .getPlaylist(props.albumPlaylistId)
                 .then((playlistData) => {
                     setAlbumPlaylistData(playlistData);
+                    setTitle(playlistData.name);
                     console.log('AlbumPlaylistView Playlist Data: ', playlistData);
-                })
+                });
+            setIsPlaylist(true);
+            setIsAlbum(false);
+
         }
     }, []);
 
@@ -23,7 +30,9 @@ function AlbumPlaylistView(props) {
         <div className='album-playlist__wrapper'>
             <div className='album-playlist__header-wrapper'>
                 <AlbumPlaylistHeader 
-                    playlist/>
+                    isPlaylist={isPlaylist}
+                    isAlbum={isAlbum}
+                    title={title}/>
             </div>
             <div className='album-playlist__table-wrapper'>
                 Test

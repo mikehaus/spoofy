@@ -130,3 +130,20 @@ button:active {
 /* ALBUM PLAYLIST HEADER SECTION END */
 
 /* ALBUM PLAYLIST TABLE SECTION */
+
+.a-p__song-table--main {
+    width: 100%;
+    margin: 30px;
+    display: table;
+    font-size: 8pt;
+}
+
+.a-p__song-table--th {
+    display: table-row;
+    letter-spacing: 1px;
+}
+
+.a-p__song-table--tc-left {
+    color: white;
+    display: table-cell;
+}

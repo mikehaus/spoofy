@@ -42,7 +42,7 @@ function AlbumPlaylistHeader(props) {
         <div className='album-playlist'>
             <div className='album-playlist__header--grid'>
                 <div className='album-playlist__header--img'>
-                    <img width='250px' height='250px' src={props.albumImgUrl} />
+                    <img width='250px' height='250px' src={props.albumPlaylistImgUrl} />
                 </div>
                 <div className='album-playlist__header--info-section'>
                     <div className='album-playlist__header--info-type'>
@@ -108,12 +108,13 @@ function AlbumPlaylistHeader(props) {
                             </IconContext.Provider>
                         </div>
                     </div>
-                    { props.isPlaylist ? (
-                        <div className='album-playlist__header--follower-count'>
-                            {props.followerCount} FOLLOWERS
-                        </div> ) : null
-                    }
                 </div>
+                { props.isPlaylist ? (
+                    <div className='album-playlist__header--follower-count'>
+                        <p>FOLLOWERS</p>
+                        {props.followerCount} 
+                    </div> ) : null
+                }
             </div>
         </div>
     );

@@ -16,8 +16,8 @@
 
 .album-playlist__header--grid {
     display: grid;
-    grid-template-columns: 270px calc(100% - 330px) 100px;
-    grid-template-rows: auto 84px;
+    grid-template-columns: 270px calc(100% - 420px) 100px;
+    grid-template-rows: 216px 84px;
 }
 
 .album-playlist__header--img {
@@ -28,7 +28,7 @@
 
 .album-playlist__header--info-section {
     grid-column: 2;
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 .album-playlist__header--bottom-container {
@@ -37,7 +37,11 @@
 }
 
 .album-playlist__header--follower-count {
+    text-align: right;
+    font-size: 8pt;
+    color: #b3b3b3;
     grid-column: 3;
+    grid-row: 2;
 }
 
 .album-playlist__main-container {
@@ -78,6 +82,7 @@
 
 .album-playlist__header--other-info {
     color: #b3b3b3;
+    margin-top: 10px;
     font-size: 10pt;
     font-weight: 400;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AlbumPlaylistHeader from './albumplaylistheader';
+import SongTable from './songtable';
 import '../../../styles/maincontent/buildingblocks/albumplaylist.css'
 
 function AlbumPlaylistView(props) {
@@ -29,7 +30,7 @@ function AlbumPlaylistView(props) {
             setIsPlaylist(true);
             setIsAlbum(false);
         }
-    }, []);
+    }, [albumPlaylistData]);
 
     return(
         <div className='album-playlist__wrapper'>
@@ -44,7 +45,7 @@ function AlbumPlaylistView(props) {
                     creator={playlistCreator}/>
             </div>
             <div className='album-playlist__table-wrapper'>
-                Test
+                <SongTable />
             </div>
         </div>
     )

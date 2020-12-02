@@ -138,6 +138,11 @@ button:active {
     font-size: 8pt;
 }
 
+.a-p__song-table--heading {
+    font-size: 8pt;
+    color: #b3b3b3;
+}
+
 .a-p__song-table--th {
     display: table-row;
     letter-spacing: 1px;

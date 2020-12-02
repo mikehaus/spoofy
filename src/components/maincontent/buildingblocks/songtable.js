@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
+import '../../../styles/maincontent/buildingblocks/albumplaylist.css';
 
 function SongTable(props) {
-    <div>
-        <section>
-            
-        </section>
-    </div>
+
+    return (
+        <div>
+        
+        </div>
+    );
 }
 
 export default SongTable;

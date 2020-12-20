@@ -103,6 +103,7 @@ function SideBar(props) {
         let nameText = e.target.innerText;
         let id = e.target.id;
         setActiveNav(nameText);
+        props.changeCurrentView(nameText);
     }
 
     const playlist_list = [

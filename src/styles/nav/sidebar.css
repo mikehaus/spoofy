@@ -4,7 +4,7 @@
     position: relative;
     display: grid;
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 90px);
     color: #b3b3b3;;    
     grid-template-rows: 42px 130px auto 60px;
 }

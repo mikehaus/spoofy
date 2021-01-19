@@ -25,26 +25,31 @@ function Player(props) {
     const [songDurationSeconds, setSongDurationSeconds] = useState(null);
     const [songProgressSeconds, setSongProgressSeconds] = useState(null);
     const [songProgressBarWidth, setSongProgressBarWidth] = useState(null);
-    const [currentlyPlayingInitialState, setCurrentlyPlayingInitialState] = useState(false);
 
     const [interval, setPlayerInterval] = useState(null);
 
     useEffect(() => {
+        debugger;
 
         restartTimer();
+
+        props.spotify
+            .getMyRecentlyPlayedTracks()
+            .then((recentlyPlayedTracks) => {
+                setRecentlyPlayed(recentlyPlayedTracks);
+            }
+        );
 
         props.spotify
             .getMyCurrentPlaybackState()
             .then((playbackData) => {
                 console.log('playbackInfo', playbackData);
-                setPlaybackAndCurrentlyPlayingStates(playbackData);
                 if (playbackData.is_playing) {
+                    setPlaybackAndCurrentlyPlayingStates(playbackData);
                     startTimer();
                 }
-                setCurrentlyPlayingInitialState(true);
                 setLoaded(true);
             }).catch(err => {
-                setCurrentlyPlayingInitialState(false);
                 console.log(err);
             }
         );        
@@ -52,12 +57,6 @@ function Player(props) {
             .getMyDevices()
             .then((deviceData) => {
                 console.log('devicesData: ', deviceData);
-            }
-        );
-        props.spotify
-            .getMyRecentlyPlayedTracks()
-            .then((recentlyPlayedTracks) => {
-                setRecentlyPlayed(recentlyPlayedTracks);
             }
         );
     }, []);

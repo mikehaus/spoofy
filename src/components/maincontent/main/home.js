@@ -20,7 +20,7 @@ function HomeView(props) {
                 <div className='home__top-spacer' />
                 <CarouselContainer
                     title='Shortcuts'
-                    carouselInfo={props.topTracksRecommended} />
+                    carouselInfo={props.playlists} />
                 <CarouselContainer
                     title='Recently played'
                     carouselInfo={props.recentlyPlayed} />

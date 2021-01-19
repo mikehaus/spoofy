@@ -17,7 +17,8 @@ function NavWindowView(props) {
                     title={props.currentView}
                     topTracksRecommended={props.topTracksRecommended}
                     recentlyPlayed={props.recentlyPlayed}
-                    spotify={props.spotify} /> : null
+                    spotify={props.spotify}
+                    playlists={props.playlists} /> : null
             } { props.currentView === 'Made For You' ?
                 <MadeForYouView
                     title={props.currentView}

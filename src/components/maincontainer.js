@@ -97,7 +97,8 @@ class MainContainer extends React.Component {
                         recentlyPlayed={this.state.recentlyPlayed}
                         currentView={this.state.currentView}
                         albumOrPlaylist={this.state.albumOrPlaylist}
-                        albumPlaylistId={this.state.playlistAlbumId} />
+                        albumPlaylistId={this.state.playlistAlbumId}
+                        playlists={this.playlistData} />
                     <Player 
                         spotify={this.state.spotify} />
                 </div>

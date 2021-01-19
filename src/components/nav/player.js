@@ -25,6 +25,7 @@ function Player(props) {
     const [songDurationSeconds, setSongDurationSeconds] = useState(null);
     const [songProgressSeconds, setSongProgressSeconds] = useState(null);
     const [songProgressBarWidth, setSongProgressBarWidth] = useState(null);
+    const [currentlyPlayingInitialState, setCurrentlyPlayingInitialState] = useState(false);
 
     const [interval, setPlayerInterval] = useState(null);
 
@@ -40,7 +41,11 @@ function Player(props) {
                 if (playbackData.is_playing) {
                     startTimer();
                 }
+                setCurrentlyPlayingInitialState(true);
                 setLoaded(true);
+            }).catch(err => {
+                setCurrentlyPlayingInitialState(false);
+                console.log(err);
             }
         );        
         props.spotify
